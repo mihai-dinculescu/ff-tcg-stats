@@ -167,7 +167,7 @@ class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
 		if (currentPath === '/home') {
 			return 0;
 		}
-		if (currentPath === '/dashboard') {
+		if (currentPath === '/octgn-stats') {
 			return 1;
 		}
 

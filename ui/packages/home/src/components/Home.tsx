@@ -24,6 +24,10 @@ const styles: StyleRulesCallback = (theme) => ({
 interface IHomeOwnProps extends RouteComponentProps, StyledComponentProps { }
 
 class HomeBase extends React.Component<IHomeOwnProps> {
+	private navigateToOctgnStats = () => {
+		this.props.history.push('/octgn-stats');
+	}
+
 	public render() {
 		const { classes } = this.props;
 		const currentPath = this.props.location.pathname;
@@ -36,7 +40,7 @@ class HomeBase extends React.Component<IHomeOwnProps> {
 					<Grid container={true} justify='center'>
 						<Grid spacing={24} alignItems='center' justify='center' container={true} className={classes!.grid}>
 							<Grid item={true} xs={12} md={6}>
-								<Card className={classes!.card}>
+								<Card className={classes!.card} onClick={this.navigateToOctgnStats}>
 									<CardActionArea>
 										<CardContent>
 											<Typography variant='h6' gutterBottom={true}>
