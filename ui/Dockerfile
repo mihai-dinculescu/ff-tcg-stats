@@ -9,3 +9,5 @@ COPY . .
 
 RUN yarn
 RUN lerna bootstrap
+RUN lerna link
+

@@ -9,14 +9,14 @@
         "lib": "lib/"
     },
     "scripts": {
-        "start": "npm run clean && npm run watch",
+        "start": "tsc --build --watch",
         "build": "tsc --build",
-        "watch": "tsc --build --watch",
         "clean": "rimraf lib"
     },
     "devDependencies": {
         "@types/node": "^11.10.5",
         "@types/react-router-dom": "^4.3.2",
+        "rimraf": "^2.6.3",
         "typescript": "^3.4.5"
     },
     "dependencies": {
