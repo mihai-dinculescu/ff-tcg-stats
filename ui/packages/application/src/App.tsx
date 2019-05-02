@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import './styles/App.scss';
 
-import { Routes } from './Routes';
+import { Routes } from './components/Routes';
 
 const theme = createMuiTheme({
 	palette: {

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, Typography } from '@material-ui/core';
 
-import { Header } from './Header';
+import { Header } from '@ff-tcg-stats/header';
 
 const styles: StyleRulesCallback = (theme) => ({
 	blockCenter: {
@@ -46,6 +46,54 @@ class HomeBase extends React.Component<IHomeOwnProps> {
 												<Typography color='secondary' variant='h6' gutterBottom={true}>
 													Stats
 											</Typography>
+											</div>
+										</CardContent>
+									</CardActionArea>
+								</Card>
+							</Grid>
+							<Grid item={true} xs={12} md={6}>
+								<Card className={classes!.card}>
+									<CardActionArea>
+										<CardContent>
+											<Typography variant='h6' gutterBottom={true}>
+												&nbsp;
+											</Typography>
+											<div className={classes!.blockCenter}>
+												<Typography color='secondary' variant='h6' gutterBottom={true}>
+													&nbsp;
+												</Typography>
+											</div>
+										</CardContent>
+									</CardActionArea>
+								</Card>
+							</Grid>
+							<Grid item={true} xs={12} md={6}>
+								<Card className={classes!.card}>
+									<CardActionArea>
+										<CardContent>
+											<Typography variant='h6' gutterBottom={true}>
+												&nbsp;
+											</Typography>
+											<div className={classes!.blockCenter}>
+												<Typography color='secondary' variant='h6' gutterBottom={true}>
+													&nbsp;
+												</Typography>
+											</div>
+										</CardContent>
+									</CardActionArea>
+								</Card>
+							</Grid>
+							<Grid item={true} xs={12} md={6}>
+								<Card className={classes!.card}>
+									<CardActionArea>
+										<CardContent>
+											<Typography variant='h6' gutterBottom={true}>
+												&nbsp;
+											</Typography>
+											<div className={classes!.blockCenter}>
+												<Typography color='secondary' variant='h6' gutterBottom={true}>
+													&nbsp;
+												</Typography>
 											</div>
 										</CardContent>
 									</CardActionArea>

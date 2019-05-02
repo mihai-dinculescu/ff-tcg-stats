@@ -5,3 +5,4 @@
 /api/__pycache__
 
 /ui/**/node_modules/
+/ui/packages/**/lib
