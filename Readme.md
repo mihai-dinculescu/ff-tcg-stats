@@ -22,6 +22,11 @@ Add to `C:\Windows\System32\drivers\etc\hosts`:
 ## 2.4. Dev URLs
 Api http://api.ff-stats.local:8080/
 
-## 2.5. Api Bash
+## 2.5. Bash
+Api
 
 	docker run --volume ./api:/app -it ff-stats_api /bin/bash
+
+UI
+
+	docker run --volume ./ui:/app -it ff-stats_ui /bin/bash

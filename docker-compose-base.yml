@@ -8,7 +8,11 @@ services:
       - ./nginx/cache/:/etc/nginx/cache
     links:
       - api
+      - ui
     depends_on:
       - api
+      - ui
   api:
     build: ./api
+  ui:
+    build: ./ui
