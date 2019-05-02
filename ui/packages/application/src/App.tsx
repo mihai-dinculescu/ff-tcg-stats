@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { blue, indigo } from '@material-ui/core/colors';
+import * as React from 'react';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './styles/App.scss';
+
+import { Routes } from './Routes';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: indigo[700]
+		},
+		secondary: {
+			main: blue[900]
+		},
+	},
+	typography: {
+		// Use the system font instead of the default Roboto font.
+		fontFamily: [
+			'"Lato"',
+			'sans-serif'
+		].join(','),
+		useNextVariants: true,
+	}
+});
+
+export class App extends React.Component {
+	public render() {
+		return (
+			<div>
+				<MuiThemeProvider theme={theme}>
+					<Routes />
+				</MuiThemeProvider>
+			</div>
+		);
+	}
 }
-
-export default App;
