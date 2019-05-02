@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/error.log:/etc/nginx/error_log.log
+      - ./nginx/cache/:/etc/nginx/cache
+    links:
+      - api
+    depends_on:
+      - api
+  api:
+    build: ./api
