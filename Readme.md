@@ -20,7 +20,8 @@ Add to `C:\Windows\System32\drivers\etc\hosts`:
 	docker-compose -f docker-compose-base.yml -f docker-compose-dev.yml down
 
 ## 2.4. Dev URLs
-Api http://api.ff-tcg-stats.local:8080/
+Web http://ff-tcg-stats.local:8080
+Api http://api.ff-tcg-stats.local:8080
 
 ## 2.5. Bash
 Api
