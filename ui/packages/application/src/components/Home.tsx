@@ -1,9 +1,10 @@
-import { Button, Card, CardActionArea, CardContent, CssBaseline, Grid, SvgIcon, Typography } from '@material-ui/core';
+import { Button, CssBaseline, Grid, SvgIcon, Typography } from '@material-ui/core';
 import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { Header } from '@ff-tcg-stats/header';
+import { HomeItem as OctgnHomeItem } from '@ff-tcg-stats/octgn-stats';
 
 const styles: StyleRulesCallback = (theme) => ({
 	block: {
@@ -76,71 +77,8 @@ class HomeBase extends React.Component<IHomeOwnProps> {
 						</Grid>
 					</Grid>
 					<Grid container={true} justify='center'>
-						<Grid spacing={24} alignItems='center' justify='center' container={true} className={classes!.grid}>
-							<Grid item={true} xs={12} md={6}>
-								<Card className={classes!.card} onClick={this.navigateToOctgnStats}>
-									<CardActionArea>
-										<CardContent>
-											<Typography variant='h6' gutterBottom={true}>
-												OCTGN
-											</Typography>
-											<div className={classes!.blockCenter}>
-												<Typography color='secondary' variant='h6' gutterBottom={true}>
-													Stats
-											</Typography>
-											</div>
-										</CardContent>
-									</CardActionArea>
-								</Card>
-							</Grid>
-							<Grid item={true} xs={12} md={6}>
-								<Card className={classes!.card}>
-									<CardActionArea>
-										<CardContent>
-											<Typography variant='h6' gutterBottom={true}>
-												&nbsp;
-											</Typography>
-											<div className={classes!.blockCenter}>
-												<Typography color='secondary' variant='h6' gutterBottom={true}>
-													&nbsp;
-												</Typography>
-											</div>
-										</CardContent>
-									</CardActionArea>
-								</Card>
-							</Grid>
-							<Grid item={true} xs={12} md={6}>
-								<Card className={classes!.card}>
-									<CardActionArea>
-										<CardContent>
-											<Typography variant='h6' gutterBottom={true}>
-												&nbsp;
-											</Typography>
-											<div className={classes!.blockCenter}>
-												<Typography color='secondary' variant='h6' gutterBottom={true}>
-													&nbsp;
-												</Typography>
-											</div>
-										</CardContent>
-									</CardActionArea>
-								</Card>
-							</Grid>
-							<Grid item={true} xs={12} md={6}>
-								<Card className={classes!.card}>
-									<CardActionArea>
-										<CardContent>
-											<Typography variant='h6' gutterBottom={true}>
-												&nbsp;
-											</Typography>
-											<div className={classes!.blockCenter}>
-												<Typography color='secondary' variant='h6' gutterBottom={true}>
-													&nbsp;
-												</Typography>
-											</div>
-										</CardContent>
-									</CardActionArea>
-								</Card>
-							</Grid>
+						<Grid spacing={24} alignItems='flex-start' justify='flex-start' container={true} className={classes!.grid}>
+							<OctgnHomeItem />
 						</Grid>
 					</Grid>
 				</div>

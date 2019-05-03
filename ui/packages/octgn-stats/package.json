@@ -6,7 +6,8 @@
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "directories": {
-        "lib": "lib/"
+        "lib": "lib/",
+        "assets": "assets/"
     },
     "scripts": {
         "start": "tsc --build --watch",

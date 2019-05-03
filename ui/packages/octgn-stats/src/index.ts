@@ -1,1 +1,2 @@
-export * from './components/OctgnStats';
+export * from './components/App';
+export * from './components/HomeItem';

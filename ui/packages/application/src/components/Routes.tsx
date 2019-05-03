@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
-import { Home } from '@ff-tcg-stats/home';
-import { OctgnStats } from '@ff-tcg-stats/octgn-stats';
+import { App as OctgnStats } from '@ff-tcg-stats/octgn-stats';
 
+import { Home } from './Home';
 import { ScrollToTop } from './ScrollTop';
 
 export const Routes = () => {
