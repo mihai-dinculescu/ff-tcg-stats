@@ -52,15 +52,6 @@ const styles: StyleRulesCallback<string> = (theme) => ({
 		color: 'inherit',
 		textDecoration: 'none',
 	},
-	productLogo: {
-		borderLeft: `1px solid ${theme.palette.grey.A100}`,
-		display: 'inline-block',
-		marginLeft: 32,
-		paddingLeft: 24,
-		[theme.breakpoints.up('md')]: {
-			paddingTop: '1.5em'
-		}
-	},
 	tabContainer: {
 		marginLeft: 32,
 		[theme.breakpoints.down('sm')]: {
