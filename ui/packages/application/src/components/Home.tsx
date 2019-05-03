@@ -35,10 +35,6 @@ const styles: StyleRulesCallback = (theme) => ({
 interface IHomeOwnProps extends RouteComponentProps, StyledComponentProps { }
 
 class HomeBase extends React.Component<IHomeOwnProps> {
-	private navigateToOctgnStats = () => {
-		this.props.history.push('/octgn-stats');
-	}
-
 	public render() {
 		const { classes } = this.props;
 		const currentPath = this.props.location.pathname;
