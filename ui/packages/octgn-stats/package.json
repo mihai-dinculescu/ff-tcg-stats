@@ -17,6 +17,9 @@
         "@types/node": "^11.10.5",
         "@types/react-router-dom": "^4.3.2",
         "rimraf": "^2.6.3",
+        "tslint": "^5.16.0",
+        "tslint-eslint-rules": "^5.4.0",
+        "tslint-react": "^4.0.0",
         "typescript": "^3.4.5"
     },
     "dependencies": {

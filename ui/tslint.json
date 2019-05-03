@@ -1,0 +1,38 @@
+{
+	"extends": [
+		"tslint:latest",
+		"tslint-react",
+		"tslint-eslint-rules"
+	],
+	"rules": {
+		"align": [true, "arguments", "parameters"],
+		"indent": [true, "tabs"],
+		"member-ordering": false,
+		"no-console": false,
+		"no-debugger": false,
+		"no-duplicate-case": true,
+		"no-duplicate-imports": false,
+		"no-implicit-dependencies": [true, "dev"],
+		"no-submodule-imports": false,
+		"no-switch-case-fall-through": true,
+		"no-this-assignment": [true, {"allow-destructuring": true}],
+		"quotemark": [true, "single", "avoid-escape", "avoid-template"],
+		"trailing-comma": false,
+		"whitespace": [
+			true,
+			"check-branch",
+			"check-decl",
+			"check-operator",
+			"check-module",
+			"check-separator",
+			"check-type",
+			"check-preblock"
+		]
+	},
+	"linterOptions": {
+		"exclude": [
+			"node_modules/**",
+			"**/serviceWorker.ts"
+		]
+	}
+}

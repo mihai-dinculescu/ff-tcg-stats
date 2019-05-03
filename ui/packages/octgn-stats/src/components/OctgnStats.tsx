@@ -1,9 +1,7 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
+import { CssBaseline, Grid } from '@material-ui/core';
 import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Card, CardActionArea, CardContent, Typography } from '@material-ui/core';
 
 import { Header } from '@ff-tcg-stats/header';
 
@@ -40,7 +38,7 @@ class OctgnStatsBase extends React.Component<IOctgnStatsOwnProps> {
 					</Grid>
 				</div>
 			</React.Fragment>
-		)
+		);
 	}
 }
 

@@ -79,7 +79,7 @@ const styles: StyleRulesCallback<string> = (theme) => ({
 			paddingTop: '0.8em'
 		}
 	},
-})
+});
 
 interface ITopbarOwnProps extends RouteComponentProps, StyledComponentProps {
 	noTabs?: boolean;
@@ -111,6 +111,7 @@ class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
 									</Link>
 								</Typography>
 							</div>
+							{/* tslint:disable-next-line:jsx-no-multiline-js */}
 							{!this.props.noTabs && (
 								<React.Fragment>
 									<div className={classes!.iconContainer}>
@@ -119,11 +120,22 @@ class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
 										</IconButton>
 									</div>
 									<div className={classes!.tabContainer}>
-										<SwipeableDrawer anchor='right' open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={this.mobileMenuOpen}>
+										<SwipeableDrawer
+											anchor='right'
+											open={this.state.menuDrawer}
+											onClose={this.mobileMenuClose}
+											onOpen={this.mobileMenuOpen}
+										>
 											<AppBar title='Menu' />
 											<List>
+												{/* tslint:disable-next-line:jsx-no-multiline-js */}
 												{Menu.map((item: any, index: any) => (
-													<ListItemCustom component={Link} to={{ pathname: item.pathname, search: this.props.location.search }} button={true} key={item.label}>
+													<ListItemCustom
+														component={Link}
+														to={{ pathname: item.pathname, search: this.props.location.search }}
+														button={true}
+														key={item.label}
+													>
 														<ListItemText primary={item.label} />
 													</ListItemCustom>
 												))}
@@ -135,8 +147,15 @@ class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
 											textColor='primary'
 											onChange={this.handleChange}
 										>
+											{/* tslint:disable-next-line:jsx-no-multiline-js */}
 											{Menu.map((item, index) => (
-												<TabCustom key={index} component={Link} to={{ pathname: item.pathname, search: this.props.location.search }} classes={{ root: classes!.tabItem }} label={item.label} />
+												<TabCustom
+													key={index}
+													component={Link}
+													to={{ pathname: item.pathname, search: this.props.location.search }}
+													classes={{ root: classes!.tabItem }}
+													label={item.label}
+												/>
 											))}
 										</Tabs>
 									</div>
@@ -146,12 +165,12 @@ class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
 					</Grid>
 				</Toolbar>
 			</AppBar>
-		)
+		);
 	}
 
 	private handleChange = (event: any, value: any) => {
 		this.setState({ value });
-	};
+	}
 
 	private mobileMenuOpen = (event: any) => {
 		this.setState({ menuDrawer: true });

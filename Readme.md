@@ -11,15 +11,21 @@ Add to `C:\Windows\System32\drivers\etc\hosts`:
 	127.0.0.1 ff-tcg-stats.local
 	127.0.0.1 api.ff-tcg-stats.local
 
-## 2.2. Up
+## 2.2. VS Code TSLint
+
+	{
+		"tslint.configFile": "ui/tslint.json"
+	}
+
+## 2.3. Up
 
 	docker-compose -f docker-compose-base.yml -f docker-compose-dev.yml up
 
-## 2.3. Down
+## 2.4. Down
 
 	docker-compose -f docker-compose-base.yml -f docker-compose-dev.yml down
 
-## 2.4. Dev URLs
+## 2.5. Dev URLs
 Web http://ff-tcg-stats.local:8080
 Api http://api.ff-tcg-stats.local:8080
 
