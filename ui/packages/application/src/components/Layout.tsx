@@ -14,36 +14,29 @@ const styles: StyleRulesCallback = (theme) => ({
 	},
 });
 
-interface IHomeOwnProps extends RouteComponentProps, StyledComponentProps { }
+interface ILayoutProps extends RouteComponentProps, StyledComponentProps { }
 
-class LayoutBase extends React.Component<IHomeOwnProps> {
-	public render() {
-		const { classes } = this.props;
-		const currentPath = this.props.location.pathname;
+const LayoutBase = (props: React.PropsWithChildren<ILayoutProps>) => {
+	const { classes } = props;
+	const currentPath = props.location.pathname;
 
-		return (
-			<>
-				<CssBaseline />
-				<Header currentPath={currentPath} />
-				<div className={classes!.root}>
-					{this.props.children}
-				</div>
-			</>
-		);
-	}
-}
+	return (
+		<>
+			<CssBaseline />
+			<Header currentPath={currentPath} />
+			<div className={classes!.root}>
+				{props.children}
+			</div>
+		</>
+	);
+};
 
 export const Layout = withRouter(withStyles(styles)(LayoutBase));
 
 export const withLayout = (WrappedComponent: React.ComponentType) => {
-	// tslint:disable-next-line:max-classes-per-file
-	return class extends React.Component {
-		public render() {
-			return (
-				<Layout>
-					<WrappedComponent />
-				</Layout>
-			);
-		}
-	};
+	return (
+		<Layout>
+			<WrappedComponent />
+		</Layout>
+	);
 };

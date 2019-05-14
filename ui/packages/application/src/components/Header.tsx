@@ -77,112 +77,95 @@ interface ITopbarOwnProps extends RouteComponentProps, StyledComponentProps {
 	currentPath: string;
 }
 
-class HeaderBase extends React.Component<ITopbarOwnProps, {}> {
-	public state = {
-		menuDrawer: false,
-		value: 0,
-	};
-
-	public componentDidMount() {
-		window.scrollTo(0, 0);
+const getCurrent = (currentPath: string) => {
+	if (currentPath === '/home') {
+		return 0;
+	}
+	if (currentPath === '/dashboard') {
+		return 1;
 	}
 
-	public render() {
-		const { classes } = this.props;
+	return null;
+};
 
-		return (
-			<AppBar position='absolute' color='default' className={classes!.appBar}>
-				<Toolbar>
-					<Grid container={true} spacing={24} alignItems='baseline'>
-						<Grid item={true} xs={12} className={classes!.flex}>
-							<div className={classes!.inline}>
-								<Typography variant='h6' color='inherit' noWrap={true}>
-									<Link to='/' className={classes!.link}>
-										<span className={classes!.tagline}>FF TCG Stats</span>
-									</Link>
-								</Typography>
-							</div>
-							{/* tslint:disable-next-line:jsx-no-multiline-js */}
-							{!this.props.noTabs && (
-								<React.Fragment>
-									<div className={classes!.iconContainer}>
-										<IconButton onClick={this.mobileMenuOpen} className={classes!.iconButton} color='inherit' aria-label='Menu'>
-											<MenuIcon />
-										</IconButton>
-									</div>
-									<div className={classes!.tabContainer}>
-										<SwipeableDrawer
-											anchor='right'
-											open={this.state.menuDrawer}
-											onClose={this.mobileMenuClose}
-											onOpen={this.mobileMenuOpen}
-										>
-											<AppBar title='Menu' />
-											<List>
-												{/* tslint:disable-next-line:jsx-no-multiline-js */}
-												{Menu.map((item: any, index: any) => (
-													<ListItemCustom
-														component={Link}
-														to={{ pathname: item.pathname, search: this.props.location.search }}
-														button={true}
-														key={item.label}
-													>
-														<ListItemText primary={item.label} />
-													</ListItemCustom>
-												))}
-											</List>
-										</SwipeableDrawer>
-										<Tabs
-											value={this.current() || this.state.value}
-											indicatorColor='primary'
-											textColor='primary'
-											onChange={this.handleChange}
-										>
+const HeaderBase = (props: ITopbarOwnProps) => {
+	const [value, setValue] = React.useState(0);
+	const [menuDrawer, setMenuDrawer] = React.useState(false);
+
+	const { classes } = props;
+
+	return (
+		<AppBar position='absolute' color='default' className={classes!.appBar}>
+			<Toolbar>
+				<Grid container={true} spacing={24} alignItems='baseline'>
+					<Grid item={true} xs={12} className={classes!.flex}>
+						<div className={classes!.inline}>
+							<Typography variant='h6' color='inherit' noWrap={true}>
+								<Link to='/' className={classes!.link}>
+									<span className={classes!.tagline}>FF TCG Stats</span>
+								</Link>
+							</Typography>
+						</div>
+						{/* tslint:disable-next-line:jsx-no-multiline-js */}
+						{!props.noTabs && (
+							<React.Fragment>
+								<div className={classes!.iconContainer}>
+									<IconButton
+										onClick={() => setMenuDrawer(true)}
+										className={classes!.iconButton}
+										color='inherit'
+										aria-label='Menu'
+									>
+										<MenuIcon />
+									</IconButton>
+								</div>
+								<div className={classes!.tabContainer}>
+									<SwipeableDrawer
+										anchor='right'
+										open={menuDrawer}
+										onClose={() => setMenuDrawer(false)}
+										onOpen={() => setMenuDrawer(true)}
+									>
+										<AppBar title='Menu' />
+										<List>
 											{/* tslint:disable-next-line:jsx-no-multiline-js */}
-											{Menu.map((item, index) => (
-												<TabCustom
-													key={index}
+											{Menu.map((item: any, index: any) => (
+												<ListItemCustom
 													component={Link}
-													to={{ pathname: item.pathname, search: this.props.location.search }}
-													classes={{ root: classes!.tabItem }}
-													label={item.label}
-												/>
+													to={{ pathname: item.pathname, search: props.location.search }}
+													button={true}
+													key={item.label}
+												>
+													<ListItemText primary={item.label} />
+												</ListItemCustom>
 											))}
-										</Tabs>
-									</div>
-								</React.Fragment>
-							)}
-						</Grid>
+										</List>
+									</SwipeableDrawer>
+									<Tabs
+										value={getCurrent(props.currentPath) || value}
+										indicatorColor='primary'
+										textColor='primary'
+										onChange={(event: React.ChangeEvent<any>, newValue: string) => setValue(Number(newValue))}
+									>
+										{/* tslint:disable-next-line:jsx-no-multiline-js */}
+										{Menu.map((item, index) => (
+											<TabCustom
+												key={index}
+												component={Link}
+												to={{ pathname: item.pathname, search: props.location.search }}
+												classes={{ root: classes!.tabItem }}
+												label={item.label}
+											/>
+										))}
+									</Tabs>
+								</div>
+							</React.Fragment>
+						)}
 					</Grid>
-				</Toolbar>
-			</AppBar>
-		);
-	}
-
-	private handleChange = (event: any, value: any) => {
-		this.setState({ value });
-	}
-
-	private mobileMenuOpen = (event: any) => {
-		this.setState({ menuDrawer: true });
-	}
-
-	private mobileMenuClose = (event: any) => {
-		this.setState({ menuDrawer: false });
-	}
-
-	private current = () => {
-		const { currentPath } = this.props;
-
-		if (currentPath === '/home') {
-			return 0;
-		}
-		if (currentPath === '/octgn-stats') {
-			return 1;
-		}
-
-		return null;
-	}
-}
+				</Grid>
+			</Toolbar>
+		</AppBar>
+	);
+};
 
 export const Header = withRouter(withStyles(styles)(HeaderBase));

@@ -1,16 +1,21 @@
-import { Component } from 'react';
-import { RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
+import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-class ScrollToTopBase extends Component<RouteComponentProps> {
-	public componentDidUpdate(prevProps: RouteProps) {
-		if (this.props.location!.pathname !== prevProps.location!.pathname) {
+const ScrollToTopBase = (props: React.PropsWithChildren<RouteComponentProps>) => {
+	React.useEffect(
+		() => {
 			window.scrollTo(0, 0);
-		}
-	}
+		},
+		[
+			props.location.pathname,
+		],
+	);
 
-	public render() {
-		return this.props.children;
-	}
-}
+	return (
+		<>
+			{props.children}
+		</>
+	);
+};
 
 export const ScrollToTop = withRouter(ScrollToTopBase);

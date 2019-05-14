@@ -27,7 +27,8 @@
 			"check-separator",
 			"check-type",
 			"check-preblock"
-		]
+		],
+		"jsx-no-lambda": false
 	},
 	"linterOptions": {
 		"exclude": [

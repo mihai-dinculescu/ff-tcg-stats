@@ -26,9 +26,7 @@ const theme = createMuiTheme({
 });
 
 export const App = () => (
-	<div>
-		<MuiThemeProvider theme={theme}>
-			<Routes />
-		</MuiThemeProvider>
-	</div>
+	<MuiThemeProvider theme={theme}>
+		<Routes />
+	</MuiThemeProvider>
 );
