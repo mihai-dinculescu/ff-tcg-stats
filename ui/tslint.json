@@ -28,7 +28,8 @@
 			"check-type",
 			"check-preblock"
 		],
-		"jsx-no-lambda": false
+		"jsx-no-lambda": false,
+		"jsx-no-multiline-js": false
 	},
 	"linterOptions": {
 		"exclude": [

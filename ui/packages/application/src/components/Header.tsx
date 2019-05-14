@@ -78,10 +78,10 @@ interface ITopbarOwnProps extends RouteComponentProps, StyledComponentProps {
 }
 
 const getCurrent = (currentPath: string) => {
-	if (currentPath === '/home') {
+	if (currentPath === '/') {
 		return 0;
 	}
-	if (currentPath === '/dashboard') {
+	if (currentPath === '/octgn-stats') {
 		return 1;
 	}
 
@@ -128,7 +128,6 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 									>
 										<AppBar title='Menu' />
 										<List>
-											{/* tslint:disable-next-line:jsx-no-multiline-js */}
 											{Menu.map((item: any, index: any) => (
 												<ListItemCustom
 													component={Link}
