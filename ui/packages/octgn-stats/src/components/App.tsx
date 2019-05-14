@@ -4,16 +4,12 @@ import * as React from 'react';
 
 const styles: StyleRulesCallback = (theme) => ({ });
 
-class AppBase extends React.Component<StyledComponentProps> {
-	public render() {
-		return (
-			<>
-				<Grid container={true} justify='center'>
-					OCTGN Stats
-				</Grid>
-			</>
-		);
-	}
-}
+const AppBase = (props: StyledComponentProps) => (
+	<>
+		<Grid container={true} justify='center'>
+			OCTGN Stats
+		</Grid>
+	</>
+);
 
 export const App = withStyles(styles)(AppBase);
