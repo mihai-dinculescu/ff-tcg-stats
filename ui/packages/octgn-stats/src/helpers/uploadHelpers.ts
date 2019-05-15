@@ -1,6 +1,6 @@
 import { IUploadedGame } from '../models/UploadedGame';
 
-const getExtension = (fileName: string) => {
+export const getExtension = (fileName: string) => {
 	return fileName.slice((Math.max(0, fileName.lastIndexOf('.')) || Infinity) + 1);
 };
 
