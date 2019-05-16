@@ -1,5 +1,12 @@
 {
-  "devDependencies": {},
+  "scripts": {
+    "start": "lerna exec --parallel -- yarn start",
+    "bootstrap": "lerna bootstrap",
+    "test:watch": "lerna exec --parallel -- yarn test:watch"
+  },
+  "devDependencies": {
+    "lerna": "^3.14.1"
+  },
   "name": "root",
   "version": "1.0.0",
   "license": "MIT",
