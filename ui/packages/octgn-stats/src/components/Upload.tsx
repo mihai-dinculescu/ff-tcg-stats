@@ -1,9 +1,9 @@
-import { Button, Grid, SvgIcon, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
-import { CloudUploadOutlined } from '@material-ui/icons';
 import * as React from 'react';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 
+import { processGameFiles } from '../apis/processGameFiles';
 import { parseFilesToGames } from '../helpers/uploadHelpers';
 import { IUploadedGame } from '../models/UploadedGame';
 
@@ -22,13 +22,6 @@ const styles: StyleRulesCallback = (theme) => ({
 		alignItems: 'center',
 		display: 'flex',
 		justifyContent: 'space-between',
-	},
-	input: {
-		display: 'none',
-	},
-	outlinedButton: {
-		margin: theme.spacing.unit,
-		textTransform: 'none',
 	},
 });
 
@@ -64,10 +57,24 @@ const UploadBase = (props: StyledComponentProps) => {
 	const [games, setGames] = React.useState<IUploadedGame[] | null>(null);
 	const { classes } = props;
 
-	const uploadFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const newGames = parseFilesToGames(event.target.files);
+	const uploadFiles = (files: File[]) => {
+		const newGames = parseFilesToGames(files);
 		setGames(newGames);
-		console.log(newGames);
+
+		newGames.forEach((game) => {
+			if (game.hasError) {
+				return;
+			}
+
+			console.log('uploading ', game.name);
+
+			const o8h = files.find((f) => f.name === `${game.name}.o8h`);
+			const o8l = files.find((f) => f.name === `${game.name}.o8l`);
+
+			processGameFiles(o8h!, o8l!).then((response: any) => {
+				console.log(response.data.games);
+			});
+		});
 	};
 
 	const dropzoneRef = React.createRef<DropzoneRef>();
@@ -80,31 +87,10 @@ const UploadBase = (props: StyledComponentProps) => {
 						<div className={classes!.block}>
 							<Typography variant='h6' gutterBottom={true}>OCTGN Stats</Typography>
 						</div>
-						<div>
-							<input
-								accept='.o8h,.o8l'
-								className={classes!.input}
-								style={{ display: 'none' }}
-								id='raised-button-file'
-								multiple={true}
-								type='file'
-								onChange={uploadFiles}
-							/>
-							<label htmlFor='raised-button-file'>
-								<Button
-									variant='outlined'
-									component='span'
-									className={classes!.outlinedButton}
-								>
-									<CloudUploadOutlined />
-									&nbsp;Upload
-								</Button>
-							</label>
-						</div>
 					</div>
 				</Grid>
 				<Grid item={true} xs={12}>
-					<Dropzone ref={dropzoneRef}>
+					<Dropzone ref={dropzoneRef} onDropAccepted={uploadFiles}>
 						{({getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject, isFocused}) => {
 							const style = React.useMemo(
 								() => ({

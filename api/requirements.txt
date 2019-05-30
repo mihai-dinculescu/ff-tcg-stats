@@ -1,2 +1,7 @@
 Flask
+flask-cors
+python-dateutil
+requests
+pandas
+sqlalchemy
 pytest

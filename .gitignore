@@ -5,6 +5,7 @@
 /nginx/
 
 /api/__pycache__
+/api/.pytest_cache
 
 /ui/**/node_modules/
 /ui/packages/**/lib

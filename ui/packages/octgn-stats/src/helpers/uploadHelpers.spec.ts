@@ -1,11 +1,7 @@
 import { getExtension, parseFilesToGames } from './uploadHelpers';
 
 describe('parseFilesToGames', () => {
-	it('parses null', () => {
-		expect(parseFilesToGames(null)).toEqual([]);
-	});
-
-	it('parses FileList', () => {
+	it('parses File array', () => {
 		const fileListMock = [];
 		fileListMock[0] = { name: 'game 1.o8h' };
 		fileListMock[1] = { name: 'game 1.o8l' };
@@ -16,7 +12,7 @@ describe('parseFilesToGames', () => {
 		fileListMock[6] = { name: 'game 4.o8h' };
 		fileListMock[7] = { name: 'game 5.o8l' };
 
-		const result = parseFilesToGames(fileListMock as unknown as FileList);
+		const result = parseFilesToGames(fileListMock as unknown as File[]);
 
 		expect(result.length).toEqual(5);
 		expect(result[0].hasError).toEqual(false);
