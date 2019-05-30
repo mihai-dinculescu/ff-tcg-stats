@@ -1,5 +1,6 @@
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 import { blue, indigo } from '@material-ui/core/colors';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import * as React from 'react';
 
 import '../styles/App.scss';
@@ -21,7 +22,6 @@ const theme = createMuiTheme({
 			'"Lato"',
 			'sans-serif'
 		].join(','),
-		useNextVariants: true,
 	}
 });
 

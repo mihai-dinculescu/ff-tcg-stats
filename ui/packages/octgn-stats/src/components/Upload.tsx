@@ -9,10 +9,10 @@ import { IUploadedGame } from '../models/UploadedGame';
 
 const styles: StyleRulesCallback = (theme) => ({
 	block: {
-		padding: theme.spacing.unit * 2,
+		padding: theme.spacing(1),
 	},
 	grid: {
-		margin: `0 ${theme.spacing.unit * 2}px`,
+		margin: `0 ${theme.spacing(1)}px`,
 		width: 1200,
 		[theme.breakpoints.down('sm')]: {
 			width: 'calc(100% - 20px)'
@@ -81,7 +81,7 @@ const UploadBase = (props: StyledComponentProps) => {
 
 	return (
 		<>
-			<Grid spacing={24} alignItems='center' justify='center' container={true} className={classes!.grid}>
+			<Grid spacing={1} alignItems='center' justify='center' container={true} className={classes!.grid}>
 				<Grid item={true} xs={12}>
 					<div className={classes!.header}>
 						<div className={classes!.block}>

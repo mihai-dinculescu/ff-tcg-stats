@@ -6,14 +6,14 @@ import { HomeItem as OctgnHomeItem } from '@ff-tcg-stats/octgn-stats';
 
 const styles: StyleRulesCallback = (theme) => ({
 	block: {
-		padding: theme.spacing.unit * 2,
+		padding: theme.spacing(1),
 	},
 	blockCenter: {
-		padding: theme.spacing.unit * 2,
+		padding: theme.spacing(1),
 		textAlign: 'center',
 	},
 	grid: {
-		margin: `0 ${theme.spacing.unit * 2}px`,
+		margin: `0 ${theme.spacing(1)}px`,
 		width: 1200,
 		[theme.breakpoints.down('sm')]: {
 			width: 'calc(100% - 20px)'
@@ -25,7 +25,7 @@ const styles: StyleRulesCallback = (theme) => ({
 		justifyContent: 'space-between',
 	},
 	outlinedButton: {
-		margin: theme.spacing.unit,
+		margin: theme.spacing(1),
 		textTransform: 'none',
 	},
 });
@@ -36,7 +36,7 @@ const HomeBase = (props: StyledComponentProps) => {
 	return (
 		<>
 			<Grid container={true} justify='center'>
-				<Grid spacing={24} alignItems='center' justify='center' container={true} className={classes!.grid}>
+				<Grid spacing={1} alignItems='center' justify='center' container={true} className={classes!.grid}>
 					<Grid item={true} xs={12}>
 						<div className={classes!.header}>
 							<div className={classes!.block}>
@@ -64,7 +64,7 @@ const HomeBase = (props: StyledComponentProps) => {
 				</Grid>
 			</Grid>
 			<Grid container={true} justify='center'>
-				<Grid spacing={24} alignItems='flex-start' justify='flex-start' container={true} className={classes!.grid}>
+				<Grid spacing={10} alignItems='flex-start' justify='flex-start' container={true} className={classes!.grid}>
 					<OctgnHomeItem />
 				</Grid>
 			</Grid>

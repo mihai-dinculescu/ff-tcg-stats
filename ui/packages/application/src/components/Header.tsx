@@ -97,7 +97,7 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 	return (
 		<AppBar position='absolute' color='default' className={classes!.appBar}>
 			<Toolbar>
-				<Grid container={true} spacing={24} alignItems='baseline'>
+				<Grid container={true} spacing={1} alignItems='baseline'>
 					<Grid item={true} xs={12} className={classes!.flex}>
 						<div className={classes!.inline}>
 							<Typography variant='h6' color='inherit' noWrap={true}>
