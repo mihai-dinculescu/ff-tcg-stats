@@ -1,10 +1,10 @@
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -16,11 +16,10 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { Menu } from './Menu';
 
-// tslint:disable-next-line:one-variable-per-declaration
 const ListItemCustom = ListItem as any;
 const TabCustom = Tab as any;
 
-const styles: StyleRulesCallback<string> = (theme) => ({
+const useStyles = makeStyles((theme) => ({
 	appBar: {
 		backgroundColor: 'white',
 		borderBottom: `1px solid ${theme.palette.grey['100']}`,
@@ -70,9 +69,9 @@ const styles: StyleRulesCallback<string> = (theme) => ({
 			paddingTop: '0.8em'
 		}
 	},
-});
+}));
 
-interface ITopbarOwnProps extends RouteComponentProps, StyledComponentProps {
+interface ITopbarOwnProps extends RouteComponentProps {
 	noTabs?: boolean;
 	currentPath: string;
 }
@@ -92,7 +91,7 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 	const [value, setValue] = React.useState(0);
 	const [menuDrawer, setMenuDrawer] = React.useState(false);
 
-	const { classes } = props;
+	const classes = useStyles();
 
 	return (
 		<AppBar position='absolute' color='default' className={classes!.appBar}>
@@ -106,7 +105,6 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 								</Link>
 							</Typography>
 						</div>
-						{/* tslint:disable-next-line:jsx-no-multiline-js */}
 						{!props.noTabs && (
 							<React.Fragment>
 								<div className={classes!.iconContainer}>
@@ -146,7 +144,6 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 										textColor='primary'
 										onChange={(event: React.ChangeEvent<any>, newValue: string) => setValue(Number(newValue))}
 									>
-										{/* tslint:disable-next-line:jsx-no-multiline-js */}
 										{Menu.map((item, index) => (
 											<TabCustom
 												key={index}
@@ -167,4 +164,4 @@ const HeaderBase = (props: ITopbarOwnProps) => {
 	);
 };
 
-export const Header = withRouter(withStyles(styles)(HeaderBase));
+export const Header = withRouter(HeaderBase);

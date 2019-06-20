@@ -1,13 +1,13 @@
-import { Grid, Typography } from '@material-ui/core';
-import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
+import { Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import * as React from 'react';
-import Dropzone, { DropzoneRef } from 'react-dropzone';
 
-import { processGameFiles } from '../apis/processGameFiles';
-import { parseFilesToGames } from '../helpers/uploadHelpers';
-import { IUploadedGame } from '../models/UploadedGame';
+import { processMatchFiles } from '../apis/processMatchFiles';
+import { GamesContext } from '../contexts/GamesContext';
+import { parseFilesToMatches } from '../helpers/uploadHelpers';
+import { IMatchToUpload } from '../models/MatchToUpload';
+import { UploadDropzone } from './UploadDropzone';
 
-const styles: StyleRulesCallback = (theme) => ({
+const useStyles = makeStyles((theme) => ({
 	block: {
 		padding: theme.spacing(1),
 	},
@@ -23,61 +23,87 @@ const styles: StyleRulesCallback = (theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
-});
+	progressBar: {
+		height: 8,
+	}
+}));
 
-const dropzone = {
-	alignItems: 'center',
-	backgroundColor: '#fafafa',
-	borderColor: '#eeeeee',
-	borderRadius: 2,
-	borderStyle: 'dashed',
-	borderWidth: 2,
-	color: '#bdbdbd',
-	display: 'flex',
-	flex: 1,
-	flexDirection: 'column' as any,
-	outline: 'none',
-	padding: '20px',
-	transition: 'border .24s ease-in-out',
-};
+const normaliseProgress = (value: number, max: number) => value * 100 / max;
 
-const dropzoneAccept = {
-	borderColor: '#00e676',
-};
+export const Upload = () => {
+	const [, setGames] = React.useContext(GamesContext);
+	const [matchesToUpload, setMatchesToUpload] = React.useState<IMatchToUpload[] | null>(null);
+	const [completed, setCompleted] = React.useState(0);
+	const [maxCompleted, setMaxCompleted] = React.useState(100);
 
-const dropzoneActive = {
-	borderColor: '#2196f3',
-};
+	const classes = useStyles();
 
-const dropzoneReject = {
-	borderColor: '#ff1744',
-};
+	// tslint:disable-next-line:no-empty
+	const progress = React.useRef(() => {});
 
-const UploadBase = (props: StyledComponentProps) => {
-	const [games, setGames] = React.useState<IUploadedGame[] | null>(null);
-	const { classes } = props;
+	React.useEffect(
+		() => {
+			progress.current = () => {
+				if (matchesToUpload !== null) {
+					let slice: IMatchToUpload[] = [];
+
+					if (matchesToUpload.length > 3) {
+						setMatchesToUpload((oldGamesToUpload) => {
+							slice = oldGamesToUpload!.slice(0, 3);
+							return oldGamesToUpload!.slice(3);
+						});
+					} else {
+						slice = matchesToUpload;
+						setMatchesToUpload(null);
+					}
+
+					slice.forEach(async (match) => {
+						if (match.hasError) {
+							return;
+						}
+
+						try {
+							const newGames = await processMatchFiles(match);
+
+							// this ought to be immutable and possibly defined in the context
+							setGames((oldGames) => {
+								return {
+									games: oldGames.games.concat(newGames)
+								};
+							});
+
+							setCompleted((oldCompleted) => {
+								return oldCompleted + 1;
+							});
+						} catch {
+							// handle error
+						}
+					});
+				}
+			};
+		},
+	);
+
+	React.useEffect(
+		() => {
+			function tick() {
+				progress.current();
+			}
+			const timer = setInterval(tick, 500);
+
+			return () => {
+				clearInterval(timer);
+			};
+		},
+	);
 
 	const uploadFiles = (files: File[]) => {
-		const newGames = parseFilesToGames(files);
-		setGames(newGames);
-
-		newGames.forEach((game) => {
-			if (game.hasError) {
-				return;
-			}
-
-			console.log('uploading ', game.name);
-
-			const o8h = files.find((f) => f.name === `${game.name}.o8h`);
-			const o8l = files.find((f) => f.name === `${game.name}.o8l`);
-
-			processGameFiles(o8h!, o8l!).then((response: any) => {
-				console.log(response.data.games);
-			});
-		});
+		const matches = parseFilesToMatches(files);
+		const validMatches = matches.filter((m) => !m.hasError);
+		setMatchesToUpload(validMatches);
+		setCompleted(0);
+		setMaxCompleted(validMatches.length);
 	};
-
-	const dropzoneRef = React.createRef<DropzoneRef>();
 
 	return (
 		<>
@@ -90,54 +116,16 @@ const UploadBase = (props: StyledComponentProps) => {
 					</div>
 				</Grid>
 				<Grid item={true} xs={12}>
-					<Dropzone ref={dropzoneRef} onDropAccepted={uploadFiles}>
-						{({getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject, isFocused}) => {
-							const style = React.useMemo(
-								() => ({
-									...(dropzone),
-									...(isDragAccept ? dropzoneAccept : {}),
-									...(isDragActive || isFocused ? dropzoneActive : {}),
-									...(isDragReject ? dropzoneReject : {}),
-								}),
-								[
-									isDragAccept,
-									isDragActive,
-									isDragReject,
-									isFocused,
-								]
-							);
-
-							return (
-								<div {...getRootProps({style})}>
-									<input {...getInputProps()} />
-									<ul>
-										<li>
-											<p>Hit <strong>Upload</strong>.</p>
-										</li>
-										<li>
-											<p>
-												Navigate to your OCTGN History folder (e.g. <strong>C:\Users\my_user\Documents\OCTGN\History</strong>).
-											</p>
-										</li>
-										<li>
-											<p>
-												Select the games you want to upload.
-												<br/>
-												<strong>Note:</strong> For a game to succesfully upload you need both the
-												<strong>.o8h</strong> and <strong>.o8l</strong> files.
-											</p>
-										</li>
-									</ul>
-									<p>Drag 'n' drop some files here, or click to select files</p>
-								</div>
-							);
-						}}
-					</Dropzone>
+					<UploadDropzone uploadFiles={uploadFiles} />
+					<div>
+						<LinearProgress
+							className={classes!.progressBar}
+							variant='determinate'
+							value={normaliseProgress(completed, maxCompleted)}
+						/>
+					</div>
 				</Grid>
-				{games !== null ? games.length : ''}
 			</Grid>
 		</>
 	);
 };
-
-export const Upload = withStyles(styles)(UploadBase);

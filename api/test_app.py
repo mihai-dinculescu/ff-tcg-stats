@@ -15,12 +15,12 @@ def client():
     yield client
 
 def test_empty(client):
-    rv = client.post('/process-game-files')
+    rv = client.post('/process-match-files')
     assert b'File part missing.' in rv.data
 
 def test_missing_filename_o8h(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
             file_o8h=(None, ''),
         )
@@ -29,27 +29,27 @@ def test_missing_filename_o8h(client):
 
 def test_wrong_extension_o8h(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
-            file_o8h=(None, 'game1.doc'),
+            file_o8h=(None, 'match1.doc'),
         )
     )
     assert b'Unexpected file extension.' in rv.data
 
 def test_missing_o8l(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
-            file_o8h=(None, 'game1.o8h'),
+            file_o8h=(None, 'match1.o8h'),
         )
     )
     assert b'File part missing.' in rv.data
 
 def test_missing_filename_o8l(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
-            file_o8h=(None, 'game1.o8h'),
+            file_o8h=(None, 'match1.o8h'),
             file_o8l=(None, ''),
         )
     )
@@ -57,20 +57,20 @@ def test_missing_filename_o8l(client):
 
 def test_wrong_extension_o8l(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
-            file_o8h=(None, 'game1.o8h'),
-            file_o8l=(None, 'game1.doc'),
+            file_o8h=(None, 'match1.o8h'),
+            file_o8l=(None, 'match1.doc'),
         )
     )
     assert b'Unexpected file extension.' in rv.data
 
 def test_proper_files_with_empty_content(client):
     rv = client.post(
-        '/process-game-files',
+        '/process-match-files',
         data=dict(
-            file_o8h=(BytesIO(b'{ "State": { "Players": [] }, "DateSaved": "1900-01-01" }'), 'game1.o8h'),
-            file_o8l=(BytesIO(b''), 'game1.o8l'),
+            file_o8h=(BytesIO(b'{ "State": { "Players": [] }, "DateSaved": "1900-01-01" }'), 'match1.o8h'),
+            file_o8l=(BytesIO(b''), 'match1.o8l'),
         )
     )
 

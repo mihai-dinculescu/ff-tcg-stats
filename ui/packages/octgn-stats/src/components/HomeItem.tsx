@@ -2,8 +2,7 @@ import { Card, CardActionArea, CardContent, Grid } from '@material-ui/core';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-// tslint:disable-next-line:no-var-requires
-const octgnImage = require('../../assets/images/octgn-logo.png');
+import * as octgnImage from '../../assets/images/octgn-logo.png';
 
 export const HomeItemBase = (props: RouteComponentProps) => {
 	const navigateToOctgnStats = () => {

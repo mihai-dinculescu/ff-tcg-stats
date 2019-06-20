@@ -18,8 +18,6 @@ class GameReport:
         self.player2_damage_received = 0
 
         self.winner = None
-        self.first_gg = None
-        self.first_gg_line = None
         
         self.date = None
         
@@ -106,15 +104,15 @@ class MatchParser:
             game.player1_damage_received = sum(list(self.__parse_player_damage(game.player1_name, data)))
             game.player2_damage_received = sum(list(self.__parse_player_damage(game.player2_name, data)))
 
-            game.first_gg_line, game.first_gg = self.__parse_first_gg(game.player1_name, game.player2_name, data)
+            first_gg = self.__parse_first_gg(game.player1_name, game.player2_name, data)
 
             if game.player1_damage_received >= 7 and game.player2_damage_received < 7:
                 game.winner = game.player2_name
             elif game.player2_damage_received >= 7 and game.player1_damage_received < 7:
                 game.winner = game.player1_name
-            elif game.first_gg == game.player1_name:
+            elif first_gg == game.player1_name:
                 game.winner = game.player2_name
-            elif game.first_gg == game.player2_name:
+            elif first_gg == game.player2_name:
                 game.winner = game.player1_name
             elif game.player1_damage_received < game.player2_damage_received:
                 game.winner = game.player1_name
@@ -134,9 +132,9 @@ class MatchParser:
             yield int(damage_point)
             
     def __parse_first_gg(self, player1_name, player2_name, data):
-        index = re.search("<(" + player1_name + "|" + player2_name + ")> (.*)(\sgg|gg\s)", data, re.IGNORECASE)
+        index = re.search("<(" + player1_name + "|" + player2_name + ")>(.*)(\sgg|gg\s)", data, re.IGNORECASE)
 
         if index is not None:
-            return index.group(0), index.group(1)
+            return index.group(1)
 
-        return (None, None)
+        return None

@@ -26,8 +26,8 @@ def get_file(request_ref, file_ext):
     data = file.stream.read().decode('utf-8')
     return data
 
-@app.route('/process-game-files', methods=['POST'])
-def process_game_files():
+@app.route('/api/process-match-files', methods=['POST'])
+def process_match_files():
     try:
         file_o8h = get_file(request, 'o8h')
         file_o8l = get_file(request, 'o8l')

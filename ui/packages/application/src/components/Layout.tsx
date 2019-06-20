@@ -1,24 +1,22 @@
-import { CssBaseline } from '@material-ui/core';
-import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
+import { CssBaseline, makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { Header } from './Header';
 
-const styles: StyleRulesCallback = (theme) => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.grey['100'],
 		flexGrow: 1,
 		overflow: 'hidden',
 		paddingBottom: 200,
 	},
-});
+}));
 
-interface ILayoutProps extends RouteComponentProps, StyledComponentProps { }
-
-const LayoutBase = (props: React.PropsWithChildren<ILayoutProps>) => {
-	const { classes } = props;
+const LayoutBase = (props: React.PropsWithChildren<RouteComponentProps>) => {
 	const currentPath = props.location.pathname;
+
+	const classes = useStyles();
 
 	return (
 		<>
@@ -31,7 +29,7 @@ const LayoutBase = (props: React.PropsWithChildren<ILayoutProps>) => {
 	);
 };
 
-export const Layout = withRouter(withStyles(styles)(LayoutBase));
+const Layout = withRouter(LayoutBase);
 
 export const withLayout = (WrappedComponent: React.ComponentType) => {
 	return (

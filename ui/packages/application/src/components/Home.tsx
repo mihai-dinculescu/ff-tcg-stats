@@ -1,10 +1,9 @@
-import { Button, Grid, SvgIcon, Typography } from '@material-ui/core';
-import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
+import { Button, Grid, makeStyles, SvgIcon, Typography } from '@material-ui/core';
 import * as React from 'react';
 
 import { HomeItem as OctgnHomeItem } from '@ff-tcg-stats/octgn-stats';
 
-const styles: StyleRulesCallback = (theme) => ({
+const useStyles = makeStyles((theme) => ({
 	block: {
 		padding: theme.spacing(1),
 	},
@@ -28,10 +27,10 @@ const styles: StyleRulesCallback = (theme) => ({
 		margin: theme.spacing(1),
 		textTransform: 'none',
 	},
-});
+}));
 
-const HomeBase = (props: StyledComponentProps) => {
-	const { classes } = props;
+export const Home = () => {
+	const classes = useStyles();
 
 	return (
 		<>
@@ -71,5 +70,3 @@ const HomeBase = (props: StyledComponentProps) => {
 		</>
 	);
 };
-
-export const Home = withStyles(styles)(HomeBase);

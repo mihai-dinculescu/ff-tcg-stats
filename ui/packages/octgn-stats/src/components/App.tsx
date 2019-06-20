@@ -1,17 +1,20 @@
 import { Grid } from '@material-ui/core';
-import withStyles, { StyledComponentProps, StyleRulesCallback } from '@material-ui/core/styles/withStyles';
 import * as React from 'react';
 
+import { GamesContext } from '../contexts/GamesContext';
+import { IGames } from '../models/Games';
+import { Statistics } from './Statistics';
 import { Upload } from './Upload';
 
-const styles: StyleRulesCallback = (theme) => ({ });
+export const App = () => {
+	const [games, setGames] = React.useState<IGames>({ games: [] });
 
-const AppBase = (props: StyledComponentProps) => (
-	<>
+	return (
 		<Grid container={true} justify='center'>
-			<Upload />
+			<GamesContext.Provider value={[games, setGames]}>
+				<Upload />
+				<Statistics />
+			</GamesContext.Provider>
 		</Grid>
-	</>
-);
-
-export const App = withStyles(styles)(AppBase);
+	);
+};
