@@ -20,7 +20,7 @@ export const Statistics = () => {
 
 	return (
 		<Grid spacing={1} alignItems='center' justify='center' container={true} className={classes!.grid}>
-			<h1>Uploaded Games: {games.games.length}</h1>
+			<h1>Games: {games.games.length}</h1>
 		</Grid>
 	);
 };

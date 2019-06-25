@@ -19,14 +19,15 @@ class GameReport:
 
         self.winner = None
         
-        self.date = None
+        self.match_id = None
+        self.match_date = None
         
     def __repr__(self):
-        return r'{} - {} [{}] ({}) / {} [{}] ({}). Winner: {}. First gg line: {}.'.format(
-            self.date,
+        return r'{} - {} [{}] ({}) / {} [{}] ({}). Winner: {}.'.format(
+            self.match_date,
             self.player1_name, self.player1_deck, self.player1_damage_received,
             self.player2_name, self.player2_deck, self.player2_damage_received,
-            self.winner, self.first_gg_line
+            self.winner
         )
 
 class MatchParser:
@@ -38,10 +39,10 @@ class MatchParser:
         
     def __process(self):
         try:
-            match_state = self.__parse_match_state(json.loads(self.data_o8h))
+            match_data = self.__parse_match_state(json.loads(self.data_o8h))
             games_data = self.__split_games(self.data_o8l)
 
-            games_reports = [self.__parse_game(game_data, match_state['decks'], match_state['date'].isoformat()) for game_data in games_data]
+            games_reports = [self.__parse_game(game_data, match_data) for game_data in games_data]
             games_reports = [r for r in games_reports if r is not None]
 
             self.games = games_reports
@@ -68,7 +69,7 @@ class MatchParser:
 
             decks[player_name] = player_deck
 
-        return {'date': parse(data['DateSaved']), 'decks': decks}
+        return {'id': data['Id'], 'date': parse(data['DateSaved']), 'decks': decks}
 
     def __parse_players_cards(self, data):
         result = {}
@@ -87,24 +88,26 @@ class MatchParser:
         games = re.split("(?:[\w]+) reset the game", data)
         return games
 
-    def __parse_game(self, data, decks, created_dtm):
-        player_names = list(self.__parse_player_name(data))
+    def __parse_game(self, game_data, match_data):
+        player_names = list(self.__parse_player_name(game_data))
 
-        if (len(player_names) == 2):    
+        if (len(player_names) == 2):
             game = GameReport()
+            decks = match_data['decks']
 
-            game.date = created_dtm
-
+            game.match_id = match_data['id']
+            game.match_date = match_data['date'].isoformat()
+            
             game.player1_name = player_names[0]
             game.player2_name = player_names[1]
 
             game.player1_deck = decks[game.player1_name] if game.player1_name in decks else 'Unknown'
             game.player2_deck = decks[game.player2_name] if game.player2_name in decks else 'Unknown'
 
-            game.player1_damage_received = sum(list(self.__parse_player_damage(game.player1_name, data)))
-            game.player2_damage_received = sum(list(self.__parse_player_damage(game.player2_name, data)))
+            game.player1_damage_received = sum(list(self.__parse_player_damage(game.player1_name, game_data)))
+            game.player2_damage_received = sum(list(self.__parse_player_damage(game.player2_name, game_data)))
 
-            first_gg = self.__parse_first_gg(game.player1_name, game.player2_name, data)
+            first_gg = self.__parse_first_gg(game.player1_name, game.player2_name, game_data)
 
             if game.player1_damage_received >= 7 and game.player2_damage_received < 7:
                 game.winner = game.player2_name

@@ -1,4 +1,5 @@
 export interface IGame {
+	matchId: string;
 	matchDate: Date;
 	matchName: string;
 	player1DamageReceived: number;

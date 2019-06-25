@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	progressBar: {
 		height: 8,
-	}
+	},
+	uploadLabel: {
+		marginLeft: 'auto',
+	},
 }));
 
 const normaliseProgress = (value: number, max: number) => value * 100 / max;
@@ -47,10 +50,10 @@ export const Upload = () => {
 				if (matchesToUpload !== null) {
 					let slice: IMatchToUpload[] = [];
 
-					if (matchesToUpload.length > 3) {
+					if (matchesToUpload.length > 1) {
 						setMatchesToUpload((oldGamesToUpload) => {
-							slice = oldGamesToUpload!.slice(0, 3);
-							return oldGamesToUpload!.slice(3);
+							slice = oldGamesToUpload!.slice(0, 1);
+							return oldGamesToUpload!.slice(1);
 						});
 					} else {
 						slice = matchesToUpload;
@@ -65,13 +68,7 @@ export const Upload = () => {
 						try {
 							const newGames = await processMatchFiles(match);
 
-							// this ought to be immutable and possibly defined in the context
-							setGames((oldGames) => {
-								return {
-									games: oldGames.games.concat(newGames)
-								};
-							});
-
+							setGames(newGames);
 							setCompleted((oldCompleted) => {
 								return oldCompleted + 1;
 							});
@@ -89,7 +86,7 @@ export const Upload = () => {
 			function tick() {
 				progress.current();
 			}
-			const timer = setInterval(tick, 500);
+			const timer = setInterval(tick, 100);
 
 			return () => {
 				clearInterval(timer);
@@ -105,13 +102,24 @@ export const Upload = () => {
 		setMaxCompleted(validMatches.length);
 	};
 
+	const matchesToUploadLabel = matchesToUpload !== null && (
+		`Uploading ${completed}/${maxCompleted} matches...`
+	);
+
 	return (
 		<>
 			<Grid spacing={1} alignItems='center' justify='center' container={true} className={classes!.grid}>
-				<Grid item={true} xs={12}>
+				<Grid item={true} xs={6}>
 					<div className={classes!.header}>
 						<div className={classes!.block}>
 							<Typography variant='h6' gutterBottom={true}>OCTGN Stats</Typography>
+						</div>
+					</div>
+				</Grid>
+				<Grid item={true} xs={6}>
+					<div className={classes!.header}>
+						<div className={classes!.uploadLabel}>
+							<Typography variant='body1' gutterBottom={true}>{matchesToUploadLabel}</Typography>
 						</div>
 					</div>
 				</Grid>

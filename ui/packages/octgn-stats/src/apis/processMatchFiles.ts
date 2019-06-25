@@ -4,7 +4,8 @@ import { IGame } from '../models/Game';
 import { IMatchToUpload } from '../models/MatchToUpload';
 
 interface IApiResponse {
-	date: string;
+	match_date: string;
+	match_id: string;
 	player1_damage_received: number;
 	player1_deck: string;
 	player1_name: string;
@@ -28,7 +29,8 @@ export const processMatchFiles = async (match: IMatchToUpload) => {
 			});
 
 			const games: IGame[] = response.data.games.map((game: IApiResponse) => ({
-				matchDate: new Date(game.date),
+				matchDate: new Date(game.match_date),
+				matchId: game.match_id,
 				matchName: match.name,
 				player1DamageReceived: game.player1_damage_received,
 				player1Deck: game.player1_deck,
